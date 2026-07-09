@@ -1,0 +1,43 @@
+<?php
+
+namespace App\Models;
+
+use Illuminate\Database\Eloquent\Model;
+
+
+class TransOrder extends Model
+{
+
+
+    protected $table = 'trans_orders';
+
+    protected $fillable = [
+        'id_customer',
+        'order_code',
+        'order_date',
+        'order_end_date',
+        'order_status',
+        'order_pay',
+        'payment_method',
+        'order_change',
+        'total',
+    ];
+
+    public function customer()
+    {
+        return $this->belongsTo(Customer::class,
+         'id_customer');
+    }
+
+    public function orderDetails()
+    {
+        return $this->hasMany(TransOrderDetail::class,
+         'id_order');
+    }
+
+    public function laundryPickup()
+    {
+        return $this->hasOne(TransLaundryPickup::class,
+         'id_order');
+    }
+}
