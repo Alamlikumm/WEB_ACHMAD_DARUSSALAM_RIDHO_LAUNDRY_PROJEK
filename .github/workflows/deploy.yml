@@ -1,0 +1,33 @@
+name: Deploy Laravel to Hostdata
+
+on:
+  push:
+    branches:
+      - main
+      - master # Ditambahkan master untuk berjaga-jaga jika branch utamanya master
+
+jobs:
+  web-deploy:
+    name: 🎉 Deploy
+    runs-on: ubuntu-latest
+    steps:
+    - name: 🚚 Get latest code
+      uses: actions/checkout@v4
+    
+    - name: 📂 Sync files via FTP
+      uses: SamKirkland/FTP-Deploy-Action@v4.3.4
+      with:
+        server: ${{ secrets.FTP_SERVER }}
+        username: ${{ secrets.FTP_USERNAME }}
+        password: ${{ secrets.FTP_PASSWORD }}
+        # Default folder tujuan di cPanel biasanya adalah public_html/
+        server-dir: public_html/
+        # Mengecualikan folder vendor dan node_modules agar upload sangat cepat
+        exclude: |
+          **/.git*
+          **/.git*/**
+          .github/**
+          **/node_modules/**
+          **/vendor/**
+          **/*.zip
+          .env

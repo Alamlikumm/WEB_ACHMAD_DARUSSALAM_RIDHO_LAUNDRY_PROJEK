@@ -19,6 +19,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        $url = $this->app->make('url');
+        $url->forceRootUrl(config('app.asset_url') ?: config('app.url'));
     }
 }
