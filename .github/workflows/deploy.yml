@@ -31,5 +31,7 @@ jobs:
           .github/**
           **/node_modules/**
           **/vendor/**
+          **/public/assets/vendors/**
+          **/public/template/dist/assets/vendors/**
           **/*.zip
           .env
