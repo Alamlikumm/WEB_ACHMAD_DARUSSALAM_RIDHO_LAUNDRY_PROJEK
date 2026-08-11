@@ -1,58 +1,60 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Sistem Informasi Laundry (Ridho Laundry)
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplikasi manajemen laundry berbasis web yang dibangun menggunakan framework **Laravel**. Proyek ini mencakup antarmuka pengelolaan pesanan laundry, data pelanggan, layanan, dan dilengkapi dengan sistem *Auto-Deployment* (CI/CD) yang terhubung langsung ke server hosting cPanel (Hostdata.id).
 
-## About Laravel
+## 🚀 Fitur Utama
+* Manajemen Pelanggan
+* Pencatatan Transaksi/Pesanan Laundry
+* Manajemen Jenis Layanan
+* Auto-Deployment via GitHub Actions (Sinkronisasi kilat via FTP)
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+## 🛠️ Persyaratan Sistem
+Sebelum menjalankan aplikasi ini di komputer lokal, pastikan Anda telah menginstal:
+* PHP >= 8.x
+* Composer
+* MySQL / MariaDB (XAMPP/Laragon)
+* Node.js & NPM (Jika ada kompilasi frontend)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## 💻 Cara Menjalankan di Localhost
+1. **Clone Repositori:**
+   ```bash
+   git clone https://github.com/Alamlikumm/WEB_ACHMAD_DARUSSALAM_RIDHO_LAUNDRY_PROJEK.git
+   cd WEB_ACHMAD_DARUSSALAM_RIDHO_LAUNDRY_PROJEK
+   ```
+2. **Install Dependensi PHP:**
+   ```bash
+   composer install
+   ```
+3. **Siapkan Konfigurasi Environment:**
+   Salin (copy) file `.env.example` menjadi `.env`:
+   ```bash
+   cp .env.example .env
+   ```
+   Buka file `.env` dan atur nama database Anda di baris `DB_DATABASE=`.
+4. **Generate Application Key:**
+   ```bash
+   php artisan key:generate
+   ```
+5. **Siapkan Database:**
+   Buat database baru di MySQL (misal: `laundry_db`), lalu import file `laundry_db.sql` yang ada di root folder ke dalam database tersebut.
+6. **Jalankan Server Lokal:**
+   ```bash
+   php artisan serve
+   ```
+   Buka browser Anda dan akses `http://localhost:8000`.
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+## 🌐 Auto-Deployment (CI/CD) ke Hostdata
+Website ini menggunakan GitHub Actions (`.github/workflows/deploy.yml`) untuk mengirim perubahan kode secara otomatis ke server cPanel setiap kali Anda melakukan `git push` ke branch `main`.
 
-## Learning Laravel
+### Catatan Penting Deployment
+Agar proses sinkronisasi FTP berjalan super cepat dan tidak terkena *timeout*, file `.env`, folder `vendor`, `node_modules`, dan **beberapa aset statis berat** (seperti ikon dan plugin pihak ketiga di dalam `public/assets/vendors/`) telah diabaikan (di-*exclude*) dari proses upload otomatis GitHub.
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+**Langkah Wajib di cPanel (Hanya dilakukan 1x saat setup awal):**
+1. **Upload Aset Template:** Upload file `vendors_assets.zip` ke root folder website di cPanel Anda (`laundry`), lalu **Extract**.
+2. **Konfigurasi Database:** Buat file `.env` secara manual di cPanel dan masukkan detail database *production*.
+3. **Install Package Production:** Buka Terminal cPanel, masuk ke folder website Anda, lalu jalankan perintah:
+   ```bash
+   composer install --optimize-autoloader --no-dev
+   ```
 
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
-```
-
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
-
-## Contributing
-
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
-
-## Code of Conduct
-
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
-
-## Security Vulnerabilities
-
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
-
-## License
-
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+Setelah 3 langkah manual ini selesai dilakukan, kedepannya Anda cukup melakukan `git commit` & `git push` dan website di internet akan langsung terupdate secara otomatis!
