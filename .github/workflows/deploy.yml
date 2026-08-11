@@ -22,8 +22,8 @@ jobs:
         password: ${{ secrets.FTP_PASSWORD }}
         protocol: ftp
         port: 21
-        # Default folder tujuan di cPanel biasanya adalah public_html/
-        server-dir: public_html/
+        # Karena FTP sudah diatur (custom) ke folder laundry, target folder adalah ./ (root FTP)
+        server-dir: ./
         # Mengecualikan folder vendor dan node_modules agar upload sangat cepat
         exclude: |
           **/.git*
