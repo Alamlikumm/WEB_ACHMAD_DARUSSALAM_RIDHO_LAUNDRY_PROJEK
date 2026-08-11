@@ -20,6 +20,8 @@ jobs:
         server: ${{ secrets.FTP_SERVER }}
         username: ${{ secrets.FTP_USERNAME }}
         password: ${{ secrets.FTP_PASSWORD }}
+        protocol: ftp
+        port: 21
         # Default folder tujuan di cPanel biasanya adalah public_html/
         server-dir: public_html/
         # Mengecualikan folder vendor dan node_modules agar upload sangat cepat
